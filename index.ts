@@ -13,16 +13,17 @@ const example = defer(() => {
   console.log('DEFER SUBSCRIBED' , new Date().toISOString().slice(-7));
   return of(Math.floor(Math.random() * 100))
 }).pipe(
-  delay(3000),
   tap((value) => {
     console.log('EXAMPLE EMITING' , value)}),
-    publish(),
-    refCount()
+    share()
 );
 
 const observer = (name: string) => {
   return {
-    next: (value: number) => console.log(`observer ${name}: ${value}`),
+    next: (value: number) => {
+      console.log(`observer ${name}: ${value}`);
+
+    },
     complete: () => console.log(`observer ${name}: complete`)
   };
 }
